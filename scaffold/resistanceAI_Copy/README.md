@@ -8,7 +8,7 @@ This projects aims to provide a set of java classes and interface to facilliate 
 
 ## Python
 
-To build an agent in python, you should copy the template provided in the `random_agent.py` module. 
+To build an agent in python, you should copy the template provided in the `random_agent.py` module.
 That is, you should subclass the Agent class (defined in the `agent.py` module) and fill in the methods there.
 To manage agents in ad-hoc tournaments, it is recommended that you incorporate your student number in the module containing your agent code,
 and have all your code in the one module.
@@ -28,13 +28,13 @@ called from `src-py` (the directory containing the `resistance` package).
 Resistance is a multiplayer game, requiring at least 5 players. One third of the players are selected to be government spies, and the remaining players are memebers of the resistance.
 The spies know who all the other spies are, but the resistance members are unable to distinguish the spies.
 
-The game play consists of 5 rounds. In each round, a leader is randomly selected. That leader then proposes a group to be sent on a mission. 
-The size of the group depends on the numbers of players and and the round. All players vote on the group. 
+The game play consists of 5 rounds. In each round, a leader is randomly selected. That leader then proposes a group to be sent on a mission.
+The size of the group depends on the numbers of players and and the round. All players vote on the group.
 If players vote to accept the group, the players are sent on a mission. If players vote to reject a group, a new leader is randomly selected and the process repeats.
 If five groups are rejected in a row, the mission fails.
-When a group of players is selected for a mission, if one person betrays the group the mission will fail, otherwise it will succeed. 
-Only spies can betray the group, but they may choose not to. 
-The mission itself simply involves the players on the mission choosing whether or not to betry the group. 
+When a group of players is selected for a mission, if one person betrays the group the mission will fail, otherwise it will succeed.
+Only spies can betray the group, but they may choose not to.
+The mission itself simply involves the players on the mission choosing whether or not to betry the group.
 This is done privately, and the only public information released is how many people betrayed the group.
 
 If at least 3 missions succeed, the resistance wins. Otherwise the government wins.
@@ -52,5 +52,3 @@ If at least 3 missions succeed, the resistance wins. Otherwise the government wi
 12. Agents who go over time, will be penalised or removed from the competition.
 
 Good luck.
-
-
