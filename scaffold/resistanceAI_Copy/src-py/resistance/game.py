@@ -2,6 +2,7 @@ from agent import Agent
 from random_agent import RandomAgent
 import random
 
+
 class Game:
     '''
     A class for maintaining the state of a game of The Resistance.
