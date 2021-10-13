@@ -1,0 +1,2 @@
+    2. When action action(a, b) occurs, must update all world probabilities to include this new info. Do this by calculating P(World | action(a, b)). Calculate P(World | action(a, b)) via Bayes theorem:
+        1. P(World | A) = P(A | World) * P(W) / P(action(a, b)) however P(action(a, b)) is 1 ????

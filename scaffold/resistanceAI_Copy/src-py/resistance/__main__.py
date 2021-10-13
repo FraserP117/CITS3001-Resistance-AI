@@ -1,4 +1,5 @@
 from random_agent import RandomAgent
+from agent_SimpleBayes import SimpleBayesAgent
 from game import Game
 
 # ALL BELOW ADDED --------------------------------------------------------------------------------------------------
@@ -38,14 +39,24 @@ fails_required = {
 
 # ALL ABOVE ADDED --------------------------------------------------------------------------------------------------
 
+# agents = [
+#     RandomAgent(name='r1'),
+#     RandomAgent(name='r2'),
+#     RandomAgent(name='r3'),
+#     RandomAgent(name='r4'),
+#     RandomAgent(name='r5'),
+#     RandomAgent(name='r6'),
+#     RandomAgent(name='r7')
+# ]
+
 agents = [
-    RandomAgent(name='r1'),
-    RandomAgent(name='r2'),
-    RandomAgent(name='r3'),
-    RandomAgent(name='r4'),
-    RandomAgent(name='r5'),
-    RandomAgent(name='r6'),
-    RandomAgent(name='r7')
+    SimpleBayesAgent(name = 'r1', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r2', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r3', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r4', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r5', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r6', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r7', fails_required = fails_required, mission_sizes = mission_sizes)
 ]
 
 game = Game(agents)

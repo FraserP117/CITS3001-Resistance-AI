@@ -51,28 +51,28 @@ class SimpleBayesAgent(Agent):
         but the default code will always assume a 1-parameter constructor, which is the agent's name.
         The agent will persist between games to allow for long-term learning etc.
         '''
-        self.name = name # is this the agent number?
-        # self.spy_probabilities = [] # index is the player for which the value is the suspicion estimate (probability)
-        self.spy_probabilities = {} # key is agent, value is prob that theis agent is a spy
-        self.number_failed_missions_participated = [] # index is player value is number of times this player has been part of a sabotaged mission
-        self.mission_sizes = mission_sizes
-        self.fails_required = fails_required
+        self.name = name # a string representing the agent
+        self.spy_probabilities = {} # key is agent, value is prob that this agent is a spy
+        self.number_failed_missions_participated = [] # index is player, value is number of times this player has participated in a sabotaged mission
+        self.mission_sizes = mission_sizes # dict of mission sized for all valid player counts
+        self.fails_required = fails_required # fails required per mission for spy victory, typically 1
 
-        self.number_missions_sabotaged = 0
-        self.number_missions_completed = 0
+        self.number_missions_sabotaged = 0 # the number of missions that have been sabotaged
+        self.number_missions = 5 # the total number of missions
+        self.current_mission = 0 # the number of elapsed missions
 
-        self.number_times_selected_most_suspicious_agent = 0
-        self.number_votes_against_a_mission = 0
+        self.number_times_selected_most_suspicious_agent = 0 # the number of times this agent has selected the most suspicious agent for a mission.
+        self.number_rejects = 0 # the number of times this agent has voted against a mission
+        self.number_approves = 0 # the number of times this agent has voted for a mission
 
-        # dictionary of ints. key = agent index val = number of missions this agent has approved
-        self.vote_approve_history = {}
-        # dictionary of ints. key = agent index val = number of missions this agent has rejected
-        self.vote_reject_history = {}
+        self.vote_approve_history = {} # dictionary of ints. key = agent index val = number of missions this agent has approved
+        self.vote_reject_history = {} # dictionary of ints. key = agent index val = number of missions  this agent has rejected
 
         for i in range(number_of_players):
             self.number_of_players.append(0)
             self.vote_approve_history[i] = 0
             self.vote_reject_history[i] = 0
+            # self.spy_probabilities[i] = 1/self.number_of_players
 
     def __str__(self):
         '''
@@ -139,7 +139,7 @@ class SimpleBayesAgent(Agent):
 
             return []
 
-    def propose_mission(self, team_size, fails_required = 1): # select team
+    def propose_mission(self, team_size, fails_required = 1): # nominate a mission team 
         '''
         expects a team_size list of distinct agents with id between 0 (inclusive) and number_of_players (exclusive)
         to be returned.
@@ -204,7 +204,7 @@ class SimpleBayesAgent(Agent):
 
         return team
 
-    def vote(self, mission, proposer):
+    def vote(self, mission, proposer): # cast vote regarding team
         '''
         mission is a list of agents to be sent on a mission.
         The agents on the mission are distinct and indexed between 0 and number_of_players.
@@ -288,7 +288,7 @@ class SimpleBayesAgent(Agent):
                 Perhaps also store the particular mission delicned/accepted
                 '''
 
-    def betray(self, mission, proposer):
+    def betray(self, mission, proposer): # play success/play sabotage
         '''
         mission is a list of agents to be sent on a mission.
         The agents on the mission are distinct and indexed between 0 and number_of_players, and include this agent.
