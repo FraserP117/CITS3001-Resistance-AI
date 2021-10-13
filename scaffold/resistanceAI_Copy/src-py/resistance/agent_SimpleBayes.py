@@ -69,7 +69,7 @@ class SimpleBayesAgent(Agent):
         return self.__str__()
 
     def sort_dict_by_value(self, D): # D is empty !!!!
-        print(f"\n\ninside sort_dict_by_value: {D}\n\n")
+        # print(f"\n\ninside sort_dict_by_value: {D}\n\n")
         sorted_values = sorted(D.values()) # Sort the values
         sorted_dict = {}
 
@@ -82,7 +82,7 @@ class SimpleBayesAgent(Agent):
         return sorted_dict
 
     def dict_max_by_value(self, D):
-        print(f"\n\ninside dict_max_by_value: {D}\n\n")
+        # print(f"\n\ninside dict_max_by_value: {D}\n\n")
         sorted = self.sort_dict_by_value(D)
         return (list(sorted)[-1], D[list(sorted)[-1]])
 
@@ -102,6 +102,7 @@ class SimpleBayesAgent(Agent):
         self.number_of_players = number_of_players # the players
         self.player_number = player_number # this agent
         self.spy_list = spy_list # list of spies
+        self.all_players = [i for i in range(number_of_players)]
 
         for i in range(self.number_of_players):
             # the suspicion probabilities for all agents; estimated probability that agent is a spy:
@@ -163,10 +164,10 @@ class SimpleBayesAgent(Agent):
         # if proposer is spy
         if self.am_spy():
 
-            print(f"\n\nspy probs: {self.spy_probabilities}\n\n")
+            # print(f"\n\nspy probs: {self.spy_probabilities}\n\n")
 
             # always select self as team member:
-            team.append(self.name) # team.append(self.player_number)
+            team.append(self.player_number)
 
             # always add non-spies to team containing a spy - where selector is spy
             while len(team) < team_size:
@@ -179,9 +180,9 @@ class SimpleBayesAgent(Agent):
         else:
 
             # always select self as team member:
-            team.append(self.name) # team.append(self.player_number)
+            team.append(self.player_number)
 
-            print(f"\n\nspy probs: {self.spy_probabilities}\n\n")
+            # print(f"\n\nspy probs: {self.spy_probabilities}\n\n")
 
             # sort the spy_probabilities by probability (ascending order):
             ascending_spy_probabilities = self.sort_dict_by_value(self.spy_probabilities)
@@ -274,17 +275,16 @@ class SimpleBayesAgent(Agent):
         votes is a dictionary mapping player indexes to Booleans (True if they voted for the mission, False otherwise).
         No return value is required or expected.
 
-        votes is actually a list?
+        votes is actually a list of agents that voted for the currentmission
         '''
 
-        print(f"\n\nvotes: {votes}")
-        print(f"type votes: {type(votes)}\n\n")
+        # print(f"\n\nvotes: {votes}")
+        # print(f"type votes: {type(votes)}\n\n")
 
         # update each agent's history of votes for/against missions
-        for vote in votes:
+        for agent in self.all_players:
 
-            # if the agent voted for the mission
-            if vote == True:
+            if agent in votes:
 
                 # increment the number of mission approvals for this agent
                 self.vote_approve_history[agent] += 1
@@ -294,7 +294,7 @@ class SimpleBayesAgent(Agent):
                 '''
 
             # if the agent voted to reject the team:
-            else:
+            if agent not in votes:
 
                 # increment the number of mission betrayals for this agent
                 self.vote_reject_history[agent] += 1
@@ -302,6 +302,29 @@ class SimpleBayesAgent(Agent):
                 '''
                 Perhaps also store the particular mission?
                 '''
+
+        # # update each agent's history of votes for/against missions
+        # for agent_number in votes:
+        #
+        #     # if the agent voted for the mission
+        #     if vote == True:
+        #
+        #         # increment the number of mission approvals for this agent
+        #         self.vote_approve_history[agent] += 1
+        #         self.spy_probabilities[agent] = (self.prob_vote_approve_given_spy_priors[agent] * self.spy_probabilities[agent]) / self.prob_vote_approve[agent] # Bayesian update for votes
+        #         '''
+        #         Perhaps also store the particular mission?
+        #         '''
+        #
+        #     # if the agent voted to reject the team:
+        #     else:
+        #
+        #         # increment the number of mission betrayals for this agent
+        #         self.vote_reject_history[agent] += 1
+        #         self.spy_probabilities[agent] = (self.prob_vote_reject_given_spy_priors[agent] * self.spy_probabilities[agent]) / self.prob_vote_reject[agent] # Bayesian update for votes
+        #         '''
+        #         Perhaps also store the particular mission?
+        #         '''
 
         # # update each agent's history of votes for/against missions
         # for agent, vote in votes.items():
@@ -358,11 +381,13 @@ class SimpleBayesAgent(Agent):
         It is not expected or required for this function to return anything.
         '''
 
+        print(f"\n\nmission: {mission}\n\n") # mission is curently a list containing a name and a variable number of ints - not good!
+
         # if the mission was sabotaged
         if not mission_success:
 
             # for all players on this mission, at least one of these are spies
-            for players in mission:
+            for agent in mission:
 
                 # update the suspicion estimate for all players on the team: P(spy(a) | Z) = P(Z | spy(a)) * P(spy(a)) / P(Z)
                 self.spy_probabilities[agent] = (self.prob_betray_mission_given_spy_priors[agent] * self.spy_probabilities[agent]) / self.prob_sabotage[agent] # Bayesian update for mission plays
@@ -371,7 +396,7 @@ class SimpleBayesAgent(Agent):
         else:
 
             # for all players on this mission:
-            for players in mission:
+            for agent in mission:
 
                 # update the suspicion estimate for all players on the team: P(spy(a) | P) = P(P | spy(a)) * P(spy(a)) / P(P)
                 self.spy_probabilities[agent] = (self.prob_play_mission_given_spy_priors[agent] * self.spy_probabilities[agent]) / self.prob_play_mission[agent] # Bayesian update for mission plays
