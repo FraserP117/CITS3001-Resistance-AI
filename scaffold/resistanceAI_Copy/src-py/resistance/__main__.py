@@ -61,6 +61,16 @@ agents = [
     SimpleBayesAgent(name = 'r7', fails_required = fails_required, mission_sizes = mission_sizes)
 ]
 
+# agents = [
+#     SimpleBayesAgent(name = 'r1', fails_required = fails_required, mission_sizes = mission_sizes),
+#     SimpleBayesAgent(name = 'r2', fails_required = fails_required, mission_sizes = mission_sizes),
+#     SimpleBayesAgent(name = 'r3', fails_required = fails_required, mission_sizes = mission_sizes),
+#     SimpleBayesAgent(name = 'r4', fails_required = fails_required, mission_sizes = mission_sizes),
+#     RandomAgent(name='r5'),
+#     RandomAgent(name='r6'),
+#     RandomAgent(name='r7')
+# ]
+
 # OG
 # game = Game(agents)
 # game.play()
@@ -72,7 +82,7 @@ total_losses = 0
 loss_rates = []
 
 # play 100 games
-for i in range(1):
+for i in range(1000):
     game = Game(agents)
     game.play()
     missions_lost.append(game.missions_lost)
@@ -81,7 +91,7 @@ for i in range(1):
     loss_rates.append(loss_rate)
     games_played.append(i)
 
-loss_rate = total_losses/1
+loss_rate = total_losses/1000
 
 print(f"loss rate: {loss_rate}")
 plt.plot(games_played, missions_lost)
