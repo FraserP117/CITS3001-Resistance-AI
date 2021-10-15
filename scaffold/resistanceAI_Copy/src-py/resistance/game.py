@@ -1,7 +1,11 @@
 from agent import Agent
 from random_agent import RandomAgent
+from agent_SimpleBayes import SimpleBayesAgent
 import random
 
+# round_outcome
+# game_outcome
+# print
 
 class Game:
     '''
@@ -38,7 +42,7 @@ class Game:
             spy_list = self.spies.copy() if agent_id in self.spies else []
             self.agents[agent_id].new_game(self.num_players,agent_id, spy_list)
         #initialise rounds
-        self.missions_lost = 0
+        self.missions_lost = 0 # seems to be missions lost for resistance
         self.rounds = []
 
 
@@ -82,6 +86,9 @@ class Round():
         self.rnd = rnd
         self.missions = []
 
+        # added
+        self.number_approved_missions = 0
+
     def __str__(self):
         '''
         produces a string representation of the round
@@ -119,6 +126,10 @@ class Round():
             self.missions.append(mission)
             self.leader_id = (self.leader_id+1) % len(self.agents)
             if mission.is_approved():
+
+                # added
+                self.number_approved_missions += 1
+
                 return mission.is_successful()
         return mission.is_successful()
 

@@ -57,7 +57,7 @@ class RandomAgent(Agent):
         votes is a dictionary mapping player indexes to Booleans (True if they voted for the mission, False otherwise).
         No return value is required or expected.
         '''
-        print(f"\n\n{votes}\n\n")
+        # print(f"\n\n{votes}\n\n")
         # #nothing to do here
         # pass
 

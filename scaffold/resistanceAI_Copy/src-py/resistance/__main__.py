@@ -2,6 +2,8 @@ from random_agent import RandomAgent
 from agent_SimpleBayes import SimpleBayesAgent
 from game import Game
 
+import matplotlib.pyplot as plt
+
 # ALL BELOW ADDED --------------------------------------------------------------------------------------------------
 
 #game parameters for agents to access
@@ -59,6 +61,31 @@ agents = [
     SimpleBayesAgent(name = 'r7', fails_required = fails_required, mission_sizes = mission_sizes)
 ]
 
-game = Game(agents)
-game.play()
-print(game)
+# OG
+# game = Game(agents)
+# game.play()
+# print(game)
+
+missions_lost = []
+games_played = []
+total_losses = 0
+loss_rates = []
+
+# play 100 games
+for i in range(1):
+    game = Game(agents)
+    game.play()
+    missions_lost.append(game.missions_lost)
+    total_losses += game.missions_lost
+    loss_rate = total_losses/5
+    loss_rates.append(loss_rate)
+    games_played.append(i)
+
+loss_rate = total_losses/1
+
+print(f"loss rate: {loss_rate}")
+plt.plot(games_played, missions_lost)
+plt.title("SimpleBayes: missions played against missions lost")
+plt.xlabel("games played")
+plt.ylabel("missions lost by resistance? ")
+plt.show()
