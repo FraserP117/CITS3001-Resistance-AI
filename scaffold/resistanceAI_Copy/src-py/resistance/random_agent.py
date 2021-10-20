@@ -17,6 +17,9 @@ class RandomAgent(Agent):
         number_of_players, the player_number (an id number for the agent in the game),
         and a list of agent indexes which are the spies, if the agent is a spy, or empty otherwise
         '''
+
+        # print(f"new_game spy_list: {spy_list}")
+
         self.number_of_players = number_of_players
         self.player_number = player_number
         self.spy_list = spy_list
@@ -47,7 +50,7 @@ class RandomAgent(Agent):
         proposer is an int between 0 and number_of_players and is the index of the player who proposed the mission.
         The function should return True if the vote is for the mission, and False if the vote is against the mission.
         '''
-        return random.random()<0.5
+        return random.random() < 0.9
 
     def vote_outcome(self, mission, proposer, votes):
         '''
@@ -70,7 +73,7 @@ class RandomAgent(Agent):
         By default, spies will betray 30% of the time.
         '''
         if self.is_spy():
-            return random.random()<0.3
+            return random.random()<0.9
 
     def mission_outcome(self, mission, proposer, betrayals, mission_success):
         '''
@@ -90,8 +93,24 @@ class RandomAgent(Agent):
         rounds_complete, the number of rounds (0-5) that have been completed
         missions_failed, the numbe of missions (0-3) that have failed.
         '''
-        #nothing to do here
-        pass
+        # # nothing to do here
+        # pass
+
+        if self.is_spy():
+            print("\n----------------- SPY -----------------")
+            print(f"missions failed: {missions_failed}")
+            print(f"rounds complete: {rounds_complete}")
+            print(f"this agent: {self.player_number}")
+            print(f"spies: {self.spy_list}")
+            print("----------------- SPY -----------------\n")
+
+        else:
+            print("\n----------------- RESISTANCE -----------------")
+            print(f"missions failed: {missions_failed}")
+            print(f"rounds complete: {rounds_complete}")
+            print(f"this agent: {self.player_number}")
+            print(f"spies: {self.spy_list}")
+            print("----------------- RESISTANCE -----------------\n")
 
     def game_outcome(self, spies_win, spies):
         '''

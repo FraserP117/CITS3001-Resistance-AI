@@ -105,6 +105,43 @@ class SimpleBayesAgent(Agent):
         self.vote_approve_history = {} # dictionary of ints. key = agent index val = number of missions this agent has approved
         self.vote_reject_history = {} # dictionary of ints. key = agent index val = number of missions  this agent has rejected
 
+        # for i in range(self.number_of_players):
+        #     # the suspicion probabilities for all agents; estimated probability that agent is a spy:
+        #     self.spy_probability[i] = 0.5
+        #
+        #     # self.number_of_players.append(0)
+        #     self.vote_approve_history[i] = 0
+        #     self.vote_reject_history[i] = 0
+        #
+        #     # init action propbabilities conditioned on is_spy
+        #     # these are not PMFs - do not need to sum to 1
+        #     self.prob_vote_approve_given_spy[i] = 0.5
+        #     self.prob_vote_reject_given_spy[i] = 0.5
+        #     self.prob_nominate_team_given_spy[i] = 0.5
+        #     self.prob_play_mission_given_spy[i] = 0.3
+        #     self.prob_betray_mission_given_spy[i] = 0.7
+        #
+        #     self.prob_vote_approve_given_not_spy[i] = 0.5
+        #     self.prob_vote_reject_given_not_spy[i] = 0.5
+        #     self.prob_nominate_team_given_not_spy[i] = 0.5
+        #     self.prob_play_mission_given_not_spy[i] = 1.0
+        #     self.prob_betray_mission_given_not_spy[i] = 0.0
+        #
+        #     # init spy probabilities conditioned on agent's action
+        #     # perhaps these do not sum to 1
+        #     self.prob_spy_given_vote_approve[i] = 1/self.number_of_players
+        #     self.prob_spy_given_vote_reject[i] = 1/self.number_of_players
+        #     self.prob_spy_given_nomination_choices[i] = 1/self.number_of_players
+        #     self.prob_spy_given_play_mission[i] = 1/self.number_of_players
+        #     self.prob_spy_given_betray_mission[i] = 1/self.number_of_players
+        #
+        #     # init action probabilities:
+        #     self.prob_vote_approve[i] = 1/self.number_of_players
+        #     self.prob_vote_reject[i] = 1/self.number_of_players
+        #     self.prob_nominate_team[i] = 1/self.number_of_players
+        #     self.prob_play_mission[i] = 1/self.number_of_players
+        #     self.prob_sabotage[i] = 1/self.number_of_players
+
     def __str__(self):
         '''
         Returns a string represnetation of the agent
@@ -286,6 +323,13 @@ class SimpleBayesAgent(Agent):
         The function should return True if the vote is for the mission, and False if the vote is against the mission.
         '''
 
+        # # rank mission success:
+        # prob_mission_success = 0
+        # for agent in mission:
+        #     prob_mission_success += self.spy_probability[agent]
+
+        # prob_mission_success = prob_mission_success / self.team_size
+
         # always vote for missions where this agent is the leader
         # if self.name == proposer:
         if self.name == self.player_number:
@@ -316,12 +360,37 @@ class SimpleBayesAgent(Agent):
 
             # vote for any mission where none of the players on the mission have the hightest prob of being a spy
             for player in mission:
+                # # if any one of the proposed team is the most likely spy then vote against the team
+                # number_spies = self.spy_count[self.number_of_players]
+                # ascending_spy_probabilities = sorted(self.spy_probability.items(), key = lambda x: x[1], reverse = True)
+                # most_likely_spies_tuple = ascending_spy_probabilities[:number_spies]
+                # most_likely_spies = self.get_likely_spies(most_likely_spies_tuple)
+                # # print(f"most_likely_spies: {most_likely_spies}")
+                # if agent in most_likely_spies:
                 if player in most_likely_spies:
                     self.vote_reject_history[self.player_number] += 1
                     return False
                 else:
                     self.vote_approve_history[self.player_number] += 1
                     return True
+
+                # # if any one of the proposed team is the most likely spy then vote against the team
+                # number_spies = self.spy_count[self.number_of_players]
+                # # sort the spy_probability by probability (ascending order):
+                # ascending_spy_probability = self.sort_dict_by_value(self.spy_probability)
+                #
+                # # add players that have lowest prob of being a spy to the team:
+                # for player, probability in ascending_spy_probability.items():
+                #     most_likely_spies_tuple = ascending_spy_probabilities[:number_spies]
+                #     most_likely_spies = self.get_likely_spies(most_likely_spies_tuple)
+                #     # print(f"most_likely_spies: {self.get_likely_spies(most_likely_spies_tuple)}")
+                #     # if agent in most_likely_spies:
+                #     if player in most_likely_spies:
+                #         self.vote_reject_history[player] += 1
+                #         return False
+                #     else:
+                #         self.vote_approve_history[player] += 1
+                #         return True
 
     def vote_outcome(self, mission, proposer, votes): # calculate P(spy(a) | V) here
         '''
@@ -377,8 +446,8 @@ class SimpleBayesAgent(Agent):
 
         # return self.prob_sabotage
         if self.am_spy():
-            # return True
-            return random.random() < 0.6 # betray with probability 0.6 if spy
+            return True
+            # return random.random() < 0.6 # betray with probability 0.6 if spy
         else:
             return False # play for mission success if resistance
 
@@ -405,6 +474,14 @@ class SimpleBayesAgent(Agent):
                 # update the suspicion estimate for all players on the team: P(spy(a) | Z) = P(Z | spy(a)) * P(spy(a)) / P(Z)
                 self.spy_probability[agent] = (self.prob_betray_mission_given_spy[agent] * self.spy_probability[agent]) / self.prob_sabotage[agent] # these are not disjoint
 
+                # # update the suspicion estimate for all players on the team: P(spy(a) | Z) = P(Z | spy(a)) * P(spy(a)) / P(Z)
+                # self.spy_probability[agent] += (self.prob_betray_mission_given_spy[agent] * self.spy_probability[agent]) / self.prob_sabotage[agent] # these are not disjoint
+
+                # update the conditional probability that this agent is a spy:
+                # self.prob_spy_given_betray_mission[agent] = (self.prob_betray_mission_given_spy[agent] * self.spy_probability[agent]) / self.prob_sabotage[agent]
+
+                # # update unconditinal probability of sabotage
+                # self.prob_sabotage[agent] = self.prob_betray_mission_given_spy[agent]*self.spy_probability[agent] + self.prob_betray_mission_given_not_spy[agent]*(1 - self.spy_probability[agent])
                 # update unconditinal probability of sabotage
                 self.prob_sabotage[agent] += self.prob_betray_mission_given_spy[agent]*self.spy_probability[agent] + self.prob_betray_mission_given_not_spy[agent]*(1 - self.spy_probability[agent])
 
@@ -418,6 +495,9 @@ class SimpleBayesAgent(Agent):
 
                 # update marginal distribution for play mission probability:
                 self.prob_play_mission[agent] = self.prob_play_mission_given_spy[agent]*self.spy_probability[agent] + self.prob_play_mission_given_not_spy[agent]*(1 - self.spy_probability[agent])
+
+                # # update marginal distribution for play mission probability:
+                # self.prob_play_mission[agent] += self.prob_play_mission_given_spy[agent]*self.spy_probability[agent] + self.prob_play_mission_given_not_spy[agent]*(1 - self.spy_probability[agent])
 
         self.current_mission += 1
 
@@ -437,7 +517,15 @@ class SimpleBayesAgent(Agent):
             print(f"this agent: {self.player_number}")
             print(f"spies: {self.spy_list}")
             print("spy probabilities for all agents:")
+            # print(f"{ sorted(self.spy_probability.items(), key = lambda x: x[1], reverse = True)}")
             print(f"{self.spy_probability}")
+            # print("marginal distribution for each action:")
+            # print(f"P(prob_vote_approve): {self.prob_vote_approve}")
+            # print(f"P(prob_vote_reject): {self.prob_vote_reject}")
+            # print(f"P(prob_nominate_team): {self.prob_nominate_team}")
+            # print(f"P(prob_play_mission): {self.prob_play_mission}")
+            # print(f"P(prob_sabotage): {self.prob_sabotage}")
+            # print(f"sum: {self.sum_distribution(self.sort_dict_by_value(self.spy_probability))}")
             print("----------------- SPY -----------------")
 
         else:
@@ -447,7 +535,15 @@ class SimpleBayesAgent(Agent):
             print(f"this agent: {self.player_number}")
             print(f"spies: {self.spy_list}")
             print("spy probabilities for all agents:")
+            # print(f"{ sorted(self.spy_probability.items(), key = lambda x: x[1], reverse = True)}")
             print(f"{self.spy_probability}")
+            # print("marginal distribution for each action:")
+            # print(f"P(prob_vote_approve): {self.prob_vote_approve}")
+            # print(f"P(prob_vote_reject): {self.prob_vote_reject}")
+            # print(f"P(prob_nominate_team): {self.prob_nominate_team}")
+            # print(f"P(prob_play_mission): {self.prob_play_mission}")
+            # print(f"P(prob_sabotage): {self.prob_sabotage}")
+            # print(f"sum: {self.sum_distribution(self.sort_dict_by_value(self.spy_probability))}")
             print("----------------- RESISTANCE -----------------\n")
 
         # print(f"Number of completed rounds:   {rounds_complete}")

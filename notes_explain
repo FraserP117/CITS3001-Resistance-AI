@@ -1,0 +1,15 @@
+second table 
+
+players = {1, 2, 3, 4, 5}, 2 spies
+
+assume P(spy will betray) = 0.8
+
+a world is a particular configuration of spies.
+
+all possible worlds = {(1, 2), (1, 3), (1, 4), (1, 5), (2, 3), (2, 4), (2, 5), (3, 4), (3, 5), (4, 5)}
+
+Observation: 3 and 4 go on a mission and the mission is sabotaged by 1 vote. 
+
+It looks like each row is a possible world and each column is a player who went on the current mission. 
+Table enteries are then populated by entering P(spy will betray) if the player in the current column is in the corresponding possible world. 
+It looks like the probability that each world exists is then merely the sum of all values in the row corresponding to each world. I know you explained this to me yesterday, but I am unable to accout for the 0.32 in the secondlast row by using this method. 

@@ -6,6 +6,7 @@ import random
 # round_outcome
 # game_outcome
 # print
+# new_game
 
 class Game:
     '''
@@ -25,30 +26,135 @@ class Game:
         - calling the new_game method on all agents
         - build a scoreboard and data structures
         '''
+        # if len(agents)<5 or len(agents)>10:
+        #     raise Exception('Agent array out of range')
+        # #clone and shuffle agent array
+        # self.agents = agents.copy()
+        # random.shuffle(self.agents)
+        # self.num_players = len(agents)
+        # #allocate spies
+        # self.spies = []
+        # while len(self.spies) < Agent.spy_count[self.num_players]:
+        #     spy = random.randrange(self.num_players)
+        #     if spy not in self.spies:
+        #         self.spies.append(spy)
+        # print(f"\n\nself.spies in game.py: {self.spies}")
+        # #start game for each agent
+        # for agent_id in range(self.num_players):
+        #     spy_list = self.spies.copy() if agent_id in self.spies else []
+        #     print(f"spy_list in game.py: {spy_list}")
+        #     self.agents[agent_id].new_game(self.num_players,agent_id, spy_list)
+        # #initialise rounds
+        # self.missions_lost = 0 # seems to be missions lost for resistance
+        # self.rounds = []
+
+        # hacked random assignment
+        # if len(agents)<5 or len(agents)>10:
+        #     raise Exception('Agent array out of range')
+        # #clone and shuffle agent array
+        # self.agents = agents.copy()
+        # random.shuffle(self.agents)
+        # self.num_players = len(agents)
+        # #allocate spies
+        # self.spies = []
+        #
+        # while len(self.spies) < Agent.spy_count[self.num_players]:
+        #     spy = random.randrange(self.num_players)
+        #     # if spy not in self.spies and spy in [7, 8, 9, 10]:
+        #     if spy in [7, 8, 9, 10] and spy not in self.spies:
+        #         self.spies.append(spy)
+        # # print(f"\n\nself.spies in game.py: {self.spies}")
+        # #start game for each agent
+        # for agent_id in range(self.num_players):
+        #     spy_list = self.spies.copy() if agent_id in self.spies else []
+        #     print(f"spy_list in game.py: {spy_list}")
+        #     self.agents[agent_id].new_game(self.num_players,agent_id, spy_list)
+        # #initialise rounds
+        # self.missions_lost = 0 # seems to be missions lost for resistance
+        # self.rounds = []
+
+
+        # NOT WORKING
         if len(agents)<5 or len(agents)>10:
             raise Exception('Agent array out of range')
         #clone and shuffle agent array
         self.agents = agents.copy()
-        random.shuffle(self.agents)
+
         self.num_players = len(agents)
-        #allocate spies
-        self.spies = []
-        while len(self.spies) < Agent.spy_count[self.num_players]:
-            spy = random.randrange(self.num_players)
-            if spy not in self.spies:
-                self.spies.append(spy)
+
+        # allocate spies
+        # self.spies = [num for num in range(7, 11)]
+        self.spies = [num for num in range(6, 10)]
+        # print()
+
         #start game for each agent
         for agent_id in range(self.num_players):
+
+            # print(f"in game.py self.spies, agent_id + 1: {self.spies}, {agent_id + 1}")
             spy_list = self.spies.copy() if agent_id in self.spies else []
-            self.agents[agent_id].new_game(self.num_players,agent_id, spy_list)
+            # print(f"game.py self.spies: {self.spies}")
+            # print(f"game.py (spy_list, agent_id): {spy_list}, {agent_id}")
+            self.agents[agent_id].new_game(self.num_players, agent_id, spy_list)
+
         #initialise rounds
         self.missions_lost = 0 # seems to be missions lost for resistance
         self.rounds = []
 
 
+
+        # # NOT WORKING
+        # if len(agents)<5 or len(agents)>10:
+        #     raise Exception('Agent array out of range')
+        # #clone and shuffle agent array
+        # self.agents = agents.copy()
+        #
+        # self.num_players = len(agents)
+        #
+        # # allocate spies
+        # self.spies = [num for num in range(7, 11)]
+        # # print(f"\n\nself.spies in game.py: {self.spies}")
+        #
+        # # self.spies = []
+        # # for agent in agents:
+        # #     names = ['r7', 'r8', 'r9', 'r10']
+        # #     # names = ['r5', 'r6', 'r7']
+        # #     if agent.name in names:
+        # #         self.spies.append(names.index(agent.name) + 7)
+        #
+        # #start game for each agent
+        # for agent_id in range(self.num_players):
+        #
+        #     # print(f"self.spies in game.py: {self.spies}")
+        #     spy_list = self.spies.copy() if agent_id in self.spies else []
+        #     # print(f"spy list in game.py: {spy_list}")
+        #     self.agents[agent_id].new_game(self.num_players, agent_id, spy_list)
+        #
+        #     # # print(f"self.spies in game.py: {self.spies}")
+        #     # if agent_id in self.spies:
+        #     #     spy_list = self.spies.copy()
+        #     #     print(f"spy list in game.py: {spy_list}")
+        #     #     self.agents[agent_id].new_game(self.num_players, agent_id, spy_list)
+        #     #     num_players += 1
+        #     #     num_spies += 1
+        #     #     spyz.append(agent_id)
+        #     # else:
+        #     #     spy_list = []
+        #     #     print(f"spy list in game.py: {spy_list}")
+        #     #     self.agents[agent_id].new_game(self.num_players, agent_id, spy_list)
+        #     #     num_players += 1
+        #     #     num_resistance += 1
+        #
+        #     # self.agents[agent_id].new_game(self.num_players, agent_id, spy_list)
+        #
+        # #initialise rounds
+        # self.missions_lost = 0 # seems to be missions lost for resistance
+        # self.rounds = []
+
+
     def play(self):
         leader_id = 0
         for i in range(5):
+            # print(f"spies: {self.spies}")
             self.rounds.append(Round(leader_id,self.agents, self.spies, i))
             if not self.rounds[i].play(): self.missions_lost+= 1
             for a in self.agents:
@@ -122,6 +228,7 @@ class Round():
         fails_required = Agent.fails_required[len(self.agents)][self.rnd]
         while len(self.missions)<5:
             team = self.agents[self.leader_id].propose_mission(mission_size, fails_required)
+            # print(f"spies: {self.spies}")
             mission = Mission(self.leader_id, team, self.agents, self.spies, self.rnd)
             self.missions.append(mission)
             self.leader_id = (self.leader_id+1) % len(self.agents)
@@ -167,6 +274,7 @@ class Mission():
         and if the vote is in favour,
         asking spies if they wish to fail the mission
         '''
+        # print(f"spies: {self.spies}")
         self.votes_for = [i for i in range(len(self.agents)) if self.agents[i].vote(self.team, self.leader_id)]
         for a in self.agents:
             a.vote_outcome(self.team, self.leader_id, self.votes_for)
