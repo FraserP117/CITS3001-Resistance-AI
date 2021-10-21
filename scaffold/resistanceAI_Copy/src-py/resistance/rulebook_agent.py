@@ -235,25 +235,24 @@ class RuleBookAgent(Agent):
         '''
 
         for agent in self.all_players:
-            pass
 
-            # if agent in votes:
-            #
-            #     # increment the number of mission approvals for this agent
-            #     self.vote_approve_history[agent] += 1
-            #
-            #     # update the marginal distribution for voting approve:
-            #     self.prob_vote_approve[agent] = self.prob_vote_approve_given_spy[agent]*self.frequency_been_on_failed_missions[agent] + self.prob_vote_approve_given_not_spy[agent]*(1 - self.frequency_been_on_failed_missions[agent])
-            #
-            #
-            # # if the agent voted to reject the team:
-            # if agent not in votes:
-            #
-            #     # increment the number of mission betrayals for this agent
-            #     self.vote_reject_history[agent] += 1
-            #
-            #     # update the marginal distribution for voting reject:
-            #     self.prob_vote_reject[agent] = self.prob_vote_reject_given_spy[agent]*self.frequency_been_on_failed_missions[agent] + self.prob_vote_reject_given_not_spy[agent]*(1 - self.frequency_been_on_failed_missions[agent])
+            if agent in votes:
+
+                # increment the number of mission approvals for this agent
+                self.vote_approve_history[agent] += 1
+
+                # update the marginal distribution for voting approve:
+                self.prob_vote_approve[agent] = self.prob_vote_approve_given_spy[agent]*self.frequency_been_on_failed_missions[agent] + self.prob_vote_approve_given_not_spy[agent]*(1 - self.frequency_been_on_failed_missions[agent])
+
+
+            # if the agent voted to reject the team:
+            if agent not in votes:
+
+                # increment the number of mission betrayals for this agent
+                self.vote_reject_history[agent] += 1
+
+                # update the marginal distribution for voting reject:
+                self.prob_vote_reject[agent] = self.prob_vote_reject_given_spy[agent]*self.frequency_been_on_failed_missions[agent] + self.prob_vote_reject_given_not_spy[agent]*(1 - self.frequency_been_on_failed_missions[agent])
 
     def betray(self, mission, proposer): # play success/play sabotage
         '''

@@ -336,6 +336,7 @@ import random
 # from agent import Agent
 # from random_agent import RandomAgent
 # import random
+# mission_outcome
 
 class Game:
     '''
@@ -367,6 +368,7 @@ class Game:
             spy = random.randrange(self.num_players)
             if spy not in self.spies:
                 self.spies.append(spy)
+        print(f"self.spies: {self.spies}")
         #start game for each agent
         for agent_id in range(self.num_players):
             spy_list = self.spies.copy() if agent_id in self.spies else []
@@ -381,11 +383,10 @@ class Game:
         # self.agents = agents.copy()
         #
         # self.num_players = len(agents)
-        #
         # # allocate spies
         # # self.spies = [num for num in range(7, 11)]
         # self.spies = [num for num in range(6, 10)]
-        # # print()
+        # print(f"self.spies: {self.spies}")
         #
         # #start game for each agent
         # for agent_id in range(self.num_players):
