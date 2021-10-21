@@ -1,7 +1,7 @@
 from random_agent import RandomAgent
 from agent_SimpleBayes import SimpleBayesAgent
 from game import Game
-from rulebook_agent import RuleBookAgent
+from rulebook_agent_1 import RuleBookAgent
 
 import matplotlib.pyplot as plt
 
@@ -115,20 +115,7 @@ fails_required = {
 #     RandomAgent(name='r10')
 # ]
 
-# no simple bayes spies
-agents = [
-    SimpleBayesAgent(name = 'r1', fails_required = fails_required, mission_sizes = mission_sizes),
-    SimpleBayesAgent(name = 'r2', fails_required = fails_required, mission_sizes = mission_sizes),
-    SimpleBayesAgent(name = 'r3', fails_required = fails_required, mission_sizes = mission_sizes),
-    SimpleBayesAgent(name = 'r4', fails_required = fails_required, mission_sizes = mission_sizes),
-    SimpleBayesAgent(name = 'r5', fails_required = fails_required, mission_sizes = mission_sizes),
-    SimpleBayesAgent(name = 'r6', fails_required = fails_required, mission_sizes = mission_sizes),
-    RandomAgent(name='r7'),
-    RandomAgent(name='r8'),
-    RandomAgent(name='r9'),
-    RandomAgent(name='r10')
-]
-
+# # no simple bayes spies
 # agents = [
 #     SimpleBayesAgent(name = 'r1', fails_required = fails_required, mission_sizes = mission_sizes),
 #     SimpleBayesAgent(name = 'r2', fails_required = fails_required, mission_sizes = mission_sizes),
@@ -136,10 +123,51 @@ agents = [
 #     SimpleBayesAgent(name = 'r4', fails_required = fails_required, mission_sizes = mission_sizes),
 #     SimpleBayesAgent(name = 'r5', fails_required = fails_required, mission_sizes = mission_sizes),
 #     SimpleBayesAgent(name = 'r6', fails_required = fails_required, mission_sizes = mission_sizes),
-#     SimpleBayesAgent(name = 'r7', fails_required = fails_required, mission_sizes = mission_sizes),
-#     SimpleBayesAgent(name = 'r8', fails_required = fails_required, mission_sizes = mission_sizes),
-#     SimpleBayesAgent(name = 'r9', fails_required = fails_required, mission_sizes = mission_sizes),
-#     SimpleBayesAgent(name = 'r10', fails_required = fails_required, mission_sizes = mission_sizes),
+#     RandomAgent(name='r7'),
+#     RandomAgent(name='r8'),
+#     RandomAgent(name='r9'),
+#     RandomAgent(name='r10')
+# ]
+
+agents = [
+    SimpleBayesAgent(name = 'r1', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r2', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r3', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r4', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r5', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r6', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r7', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r8', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r9', fails_required = fails_required, mission_sizes = mission_sizes),
+    SimpleBayesAgent(name = 'r10', fails_required = fails_required, mission_sizes = mission_sizes),
+]
+
+# # no simple bayes spies
+# agents = [
+#     SimpleBayesAgent(name = 'r1', fails_required = fails_required, mission_sizes = mission_sizes),
+#     SimpleBayesAgent(name = 'r2', fails_required = fails_required, mission_sizes = mission_sizes),
+#     SimpleBayesAgent(name = 'r3', fails_required = fails_required, mission_sizes = mission_sizes),
+#     SimpleBayesAgent(name = 'r4', fails_required = fails_required, mission_sizes = mission_sizes),
+#     SimpleBayesAgent(name = 'r5', fails_required = fails_required, mission_sizes = mission_sizes),
+#     SimpleBayesAgent(name = 'r6', fails_required = fails_required, mission_sizes = mission_sizes),
+#     RuleBookAgent(name='r7'),
+#     RuleBookAgent(name='r8'),
+#     RuleBookAgent(name='r9'),
+#     RuleBookAgent(name='r10')
+# ]
+
+# # 1 simplebayes spy
+# agents = [
+#     RuleBookAgent(name = 'r1'),
+#     RuleBookAgent(name = 'r2'),
+#     RuleBookAgent(name = 'r3'),
+#     RuleBookAgent(name = 'r4'),
+#     RuleBookAgent(name = 'r5'),
+#     RuleBookAgent(name = 'r6'),
+#     RuleBookAgent(name = 'r7'),
+#     RuleBookAgent(name = 'r8'),
+#     RuleBookAgent(name = 'r9'),
+#     RuleBookAgent(name = 'r10')
 # ]
 
 missions_lost = []
