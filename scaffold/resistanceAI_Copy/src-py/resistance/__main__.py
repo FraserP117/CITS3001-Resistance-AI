@@ -156,7 +156,7 @@ agents = [
 #     RuleBookAgent(name='r10')
 # ]
 
-# # 1 simplebayes spy
+# # RuleBookAgents
 # agents = [
 #     RuleBookAgent(name = 'r1'),
 #     RuleBookAgent(name = 'r2'),
@@ -193,19 +193,7 @@ loss_rate = total_missions_lost/1000
 
 print(f"average games lost: {loss_rate}")
 plt.plot(games_played, missions_lost, linewidth = 0.5)
-plt.title("SimpleBayesAgent: missions played against missions lost")
+plt.title(f"SimpleBayesAgent: average rounds lost by resistane: {loss_rate}")
 plt.xlabel("games played")
 plt.ylabel("missions lost by resistance")
 plt.show()
-
-# game = Game(agents)
-# # print(f"game spies: {game.spies}")
-# game.play()
-# missions_lost = game.missions_lost
-#
-# print(f"missions  lost: {missions_lost}")
-
-# game = Game(agents)
-# game.play()
-#
-# print(f"missions failed: {game.missions_lost}")
